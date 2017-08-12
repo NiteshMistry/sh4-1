@@ -1,0 +1,120 @@
++ Start: 12th Aug
+	- 8 weekends - 16 days = 15 (training) + 1 (exam)
+		- exam : 24th Sep - Sun -- 100 mark - Grad
+			- Lab exam
+			- Quiz
+
++ Schedule:
+	- 10 to 1:30 -- lecture
+	- 2 to 4 pm -- lab
+
++ Syllabus:
+	- 
+
++ Setup:
+	+ Ubuntu (Linux) - 16/17 64 bit		| Windows 8.1 64 bit +
+	+ Eclipse Neon (Java EE) - 64 bit + Spring STS/IDE + JBoss Dev Tools 
+	+ Apache Tomcat 8.0.x
+	+ Java 1.8
+	+ MySQL 5.x
+
++ Pre-requisits:
+	+ Core Java -- OOP, Collection Framework, Generics, ...
+	+ Database -- SQL - Queries, ...
+	+ Web -- HTML, JS, CSS, XML
+
++ JDBC:
+
+	+ JDBC Programming:
+		1. Load and register JDBC driver for your db.
+			Class.forName("driverClassName");
+				- class loaded in JVM
+				- execute static block
+					- creates object of that driver class.
+					- register with DriverManager
+		2. Create db connection.
+			con = DriverManager.getConnection("dbUrl", "dbUser", "dbPass");
+				- get the database type from url.
+				- access corresponding registered JDBC driver.
+				- call driver object's getConnection() method, which in turn create socket connection with db server.
+		3. Create statement.
+			stmt = con.createStatement();
+		4. Execute the statement and get the result:
+			DQL		-> SELECT ...
+				- Get result using ResultSet & process it.
+				rs = stmt.executeQuery("SELECT ...");			
+				while(rs.next()) {
+					// ...
+				}
+				rs.close();
+			DDL/DML -> ...
+				- Affected row count (int).
+				cnt = stmt.executeUpdate("...");				
+		5. Close statement & connection.
+			stmt.close();
+			con.close();
+
++ CRUD:
+	BOOKS table --> ID, NAME, AUTHOR, SUBJECT, PRICE --> BookDao
+		- List<Book> getSubjectBooks(String subject);
+		- List<String> getSubjects();
+		- Book getBook(int id);
+		- void addBook(Book b);
+
++ ResultSet:
+	- Like -- Fwd Only Read Only Cursor
+		- Access one record at a time.
+		- next() method to fetch next row/record from db.
+	- Scrollable ResultSet:
+		- Fwd access, reverse access, random access.
+			- next(), previous()
+			- first(), last(), absolute(n), relative(n)		
+	- Updatable ResultSet:
+		- Can perform Insert, Update and Delete operations.
+		- insertRow(), updateRow(), deleteRow().
+
++ Transaction:
+	- Set of DML queries that are executed as a single unit.
+	- JDBC Connection:
+		setAutoCommit() -- true default
+	- 
+		1. load & regr driver.
+		2. create connection
+		3. con.setAutoCommit(false);
+		4. create DML statement"s" and execute them.
+		5. if all queries are successful, con.commit();
+		6. if any query fails, con.rollback();
+		7. release all.
+
+	try(Connection con = DriverManager.getConnection(...)) {
+		con.setAutoCommit(false); // ***
+		s1 = con.prepareStatement("sql1");
+		s2 = con.prepareStatement("sql2");
+		...
+		s1.executeUpdate();
+		s2.executeUpdate();
+		...
+		con.commit();			// ***
+	} catch(Exception e) {
+		con.rollback();			// ***
+	}	
+
++ CallableStatement:
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
