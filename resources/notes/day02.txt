@@ -1,0 +1,139 @@
++ Statement vs PreparedStatement:
+	- Statement -- SQL queries -- string concat
+		"SELECT * FROM CONTACTS WHERE ID=" + var;
+			If var = 1, Records of ID 1 will fetched.
+			If user enters var = "1 or 1", All records fetched.
+				--> SQL injection.
+	- PreparedStatement -- SQL queries -- paramterized queries (?)
+		"SELECT * FROM CONTACTS WHERE ID=?"
+			? values can set before execution.
+
++ Java Enterprise Edition:
+	- Web Terminologies:
+		- Web Server:
+			- Provide us facility of executing one/more web apps in it.
+			- IIS, Apache, Tomcat, Websphere, ...
+		- Web Applications:
+			- Set of web pages / resources.
+		- Web Pages:
+			- UI that appear on web browser.
+			- Static: HTML/JS/CSS/Resources
+				- These pages are sent to client as it is.
+				- No additional processing on server side.
+			- Dynamic: Server side code execution that generates HTML/..
+				- Some code is executed on server.
+
+		- Web Client
+			- Browser, Mobile Apps, Other devices.
+
+		- HTTP Protocol:
+			- Depends on TCP protocol.
+				- Connection-less protocol.
+			- Request-Response Model.
+				- Browser --> 	REQ 	--> Web Server
+						  <--	RESP 	<--	
+				http://localhost:8080/app/resource?key1=val1&key2=val2
+			- Http Request:
+				- Request Method: 
+					GET: data sent to server in URL (query-string)
+						faster than POST.
+						less secure.
+						a. URL hit in browser
+						b. Click on hyperlink
+						c. Submit HTML form -- method="get"
+						d. programmatic request send
+					POST:  data sent in request body.
+						a. Submit HTML form -- method="post"
+						b. programmatic requestsend						
+					PUT: To send a resource/record/file on server.
+					DELETE:  To del a resource/record/file from server.
+					HEAD: To get info about the resource. Only response header will be sent back to client, not the response body.
+					TRACE: For debugging/dignostic purposes.
+					OPTIONS: To know which req methods are supported by server URL.
+				- Server Info: server ip address, port, application, resource
+				- HTTP version
+				- Request Body Length & Content Type
+				- Req Headers: Accept, Agent, Language, Cookies
+				- Request Body ---				
+			- Http Response:
+				- Status Code: 
+					- 2xx: 200-success
+					- 3xx: 302-redirection *
+					- 4xx: 404-not found, 403-forbidden.
+					- 5xx: 500-server error.
+				- Status:
+					- OK, Forbidden, ...
+				- HTTP version:
+				- Content Types:
+					- text/plain, text/html, text/xml
+					- image/jpg, image/png, ...
+					- audio/mp3, ...
+					- video/mpeg, ...
+					- application/json, ...
+				- Content Length:
+				- Response Headers: Server IP/Name, Cookies, ...
+				- Response Body.
+
+		- HTTP is connection less --> new connection per request.
+		- HTTP is state-less --> server do not maintain info about client.
+			- Web appns implement -- State management mechanisms.
+				- Session, Cookies, etc.
+
+	- Java EE -- Set of specifications
+		- Servlet/JSP specs, JPA, JTA, EJB, JMS, ...
+
+	- Java Web Applications:
+		- Java Web Servers:
+			- Web Server = Web Container + Extra Services
+				- Web Container = Servlet Engine + JSP Engine
+				- Extra Services = Connection pool, JNDI, Security, ...
+				- e.g. Apache Tomcat, Lotus, Enhydra, ...
+			- Application Server = Web Server + EJB Container
+				- EJB Container = execution of EJB.		
+				- e.g. Glassfish, JBoss, WebSphere, WebLogic, ...
+
+	+ Apache Tomcat Server:
+		- 
+	+ Java Web Appln Directory Structure:
+		[first]
+			|- *.html, *.htm, *jsp, ...
+			|- *.js, *.css, ...
+			|- *.jpg, ...
+			|- [WEB-INF]
+				|- web.xml
+				|- [classes]
+				|	|- packages -- *.class
+				|- [lib]
+					|- third party jars
+
+	+ Web Application Deployment:
+		.war --> Web Archive
+			- It is internally zip file -- with above dir structure.
+
++ Java Servlets:
+	- 
+
++ github.com/nilesh-g/sh4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
