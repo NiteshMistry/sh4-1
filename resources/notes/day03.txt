@@ -1,0 +1,71 @@
++ Java Servlets:
+	- Web Server -- HTTP -- Browser
+	- Servlet hierarchy -- Life cycle
+	- Compilation & Execution
+	- Eclipse + Tomcat + Hello Servlet.
+	- Servlet init-param
+
++ Annotations:
+	- interfaces - only method declararions -- design specs/standard
+	- marker interfaces -- empty interfaces
+		- Serializable, Cloneable --> Java -- associate metadata with class.
+		- can be associated with the class, not with members.
+		- limited metadata --> mostly used by th JVM.
+	- Annotations -- Java 5.0
+		- Associate metadata with type or its member, method params, ...
+		- Annotations also carry info in it.
+		- Types/Levels:
+			1. SOURCE level:
+				- .java file --> java compiler --> process it & then discard it.
+				- @Override, @SuppressWarnings, @Deprecated
+			2. CLASS level:
+				- retained in .class file --> JVM (class loader) --> process it & discard it.
+				- used for initial config of the class.
+				- custom class loaders.
+				- @Stateless, @Stateful, 
+			3. RUNTIME level:
+				- .class file --> loaded in JVM --> retained during execution of class.
+				- reflection is used to read and process them.
+				- typical frameworks like junit, hibernate, spring, ... use such annotations.
+				- @Table, @Column, @Controller, @RequestMapping, ...
+
++ Inter-Servlet Navigation:
+	1. HTTP Redirection:
+		- response.sendRedirect("url");
+			- url -- of any web component in project or outside project.
+			- browser is aaware of navigation (url is changed).
+			- slower -- a temp response sent to browser and new request originated from there.
+	2. Request Dispatcher:
+		- RequestDispatcher rd = request.getRequestDispatcher("url");
+		- rd.forward(request, response); 	OR		- rd.include(request, response);
+			
+
++ State Management:
+	1. Client Side State Management:
+		* Cookies
+		* Query String
+		* Web/Session Storage [HTML5]
+		- Hidden Form Fields
+	2. Server Side State Management:
+		* HTTP Session
+			- User specific data -- in key(string)-value(object) pair -- server side
+			- 	HttpSession session = request.getSession();
+
+				session.setAttribute("key", value);
+
+				value = (TypeCasting) session.getAttribute("key");
+
+				session.invalidate();
+		- Application/ServletContext
+		- Request
+
+
+
+
+
+
+
+
+
+
+
