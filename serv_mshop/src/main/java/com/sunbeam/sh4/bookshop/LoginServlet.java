@@ -27,8 +27,8 @@ public class LoginServlet extends HttpServlet {
 				c.setMaxAge(3600);
 				response.addCookie(c);
 				
-				HttpSession session = request.getSession();
-				session.setAttribute("cart", new ArrayList<Integer>());
+				//HttpSession session = request.getSession();
+				//session.setAttribute("cart", new ArrayList<Integer>());
 				
 				response.sendRedirect("subjects");
 				//String url = response.encodeRedirectURL("subjects");

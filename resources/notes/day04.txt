@@ -1,0 +1,113 @@
++ HttpSession:
+	- Collection of key(string)-value(object) pair [Map] for each user.
+	- Add attribute: session.setAttribute("key", value);
+	- Get attribute: value = session.getAttribute("key");
+	- Del attribute: session.removeAttribute("key");
+
++ ServletConfig:
+	- Config of each servlet (web.xml / @WebServlet) is stored in separate ServletConfig.
+	- web.xml --> <servlet> --> <init-param> :: key-value --> config info related to servlet.
+	
++ Application/ServletContext:
+	- ServletContext used to create RequestDispatcher, which is used for navigation within appln.
+		ServletContext ctx = this.getServletContext();
+		RequestDispatcher rd = ctx.getRequestDispatcher("/subjects");
+		rd.forward(req, resp);
+
+	- ServletContext used to for state management. Data common for all users and all web pages can be added here.
+		ServletContext ctx = this.getServletContext();
+		
+		ctx.setAttribute("key", value);
+
+		value = ctx.getAttribute("key");
+
+		ctx.removeAttribute("key");
+
+	- ServletContext used to access global config params from web.xml.
+		<context-param>
+			<param-name>color</param-name>
+			<param-value>pink</param-value>
+		</context-param>
+		
+		ServletContext ctx = this.getServletContext();
+		String color = ctx.getInitParameter("color");
+
++ Building Java Application --> Maven
+	- Build Tool:
+		1. Create project (java-jar/web-war)
+		2. Declare dependencies --> third-party jars -- pom.xml
+		3. Declare config --> e.g. java version -- pom.xml
+		4. Download dependencies during build (if not already downloaded), add them into classpath.
+		5. Build the project with dependecies and add them in deployment assembly (.war file).
+		6. Deploy the application (.war --> web server).
+
++ Listener:
+	- Event handling:
+		- Application level events:	-> ServletContextListener
+			- App deployed.					- contextInitialized()
+			- App undeployed/stopped.		- contextDestroyed()
+		- Session events:	-> HttpSessionListener
+			- New session started.			- sessionCreated()
+			- Session destroyed.			- sessionDestroyed()
+
+	- Listener implementation steps:
+		1. Implement class inherited from desired listener interface.
+		2. Implement interface methods & write appropriate code in it.
+		3. Register listener class with web appln.
+			A. web.xml
+				<listener>
+					<listener-class>pkg.ClassName</listener-class>
+				</listener>
+			B. annotation
+				@WebListener
+				class ClassName implements ListenerName {
+					// ...
+				}
+
++ JSP: Java Server Pages:
+	- Servlet = Business Logic + Presentation Logic
+	- JSP =  Presentation Logic + Business Logic
+
+	+ JSP Syntax: -- Markup (tags: html, jsp std tags, third party tags) + Server side code (java).
+		1. Directive <%@ ... %>:
+			- Define behaviour of JSP page.
+			A. <%@ page
+			B. <%@ include 
+			C. <%@ taglib 
+		2. Declaration <%! ... %>
+			- Fields & Methods of JSP page.
+		3. Scriptlet <% ... %>
+			- Server side java code to be executed for each request --> service()
+		4. Expression <%= ... %>
+			- Server side java code that is evaluated to some value, which is to be embedded into response.
+		5. Comment <%-- ... --%>	 
+			- Server side comment (not visible by client).
+
+	+ JSP implicit objects -- directly accessible in scriptlets & expressions -- internally they are local variables of _jspService() method.
+		1. request: HttpServletRequest
+		2. response: HttpServletResponse
+		3. session: HttpSession
+		4. application: ServletContext
+		5. config: ServletConfig
+		6. out: JspWriter
+		7. pageContext: PageContext		--> storing objects at page level.
+		8. page: Object	--> this pointer -- current servlet object -- synchronized
+			synchronized(page) {
+				count++;
+			}
+		9. exception: Throwable -- only for error pages -- to get exception info.
+
+	+ Java Beans:
+
+
+
+
+
+
+
+
+
+
+
+
+
