@@ -16,6 +16,20 @@
 	<h4>
 		<a href="abcd.jsp">Demo 3 : Page Not found</a>
 	</h4>
+	<h4>
+		<a href="includedir.jsp">Demo 4 : Include Directive</a>
+	</h4>
+	<h4>
+		<a href="page1.jsp">Demo 5 : forward std action</a>
+	</h4>
+	<h4>
+		<a href="includeact.jsp">Demo 6 : include std action</a>
+	</h4>
+	<h4>
+		<a href="input.jsp">Demo 7 : Arith Java Bean</a>
+	</h4>
 </body>
 </html>
+
+
 

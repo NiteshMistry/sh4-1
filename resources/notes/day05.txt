@@ -1,0 +1,111 @@
++ Directives:
+	1. <%@ page ... %>
+		- defines behaviour of JSP page (i.e. generated servlet).
+		- language="java"
+		- import="pkgname"
+		- isErrorPage="false"
+			- true: this page is used to display error message.
+				- has got additional implicit variable i.e. "exception".
+		- errorPage="someErrorPage.jsp"
+			- if error occur in current page, it will be forwarded to given error page.
+		- session="true"
+			- true: In current page "session" implicit variable (HttpSession) is accessible.
+			- false: "session" variable will be null.
+		- buffer="8kb" autoFlush="true"
+		- isThreadSafe="true"
+	2. <%@ include ... %>
+		- file="..."
+			- the given file is included in the response of current page.
+		- As per specs, this directive does static inclusion -- processed translation stage.
+	3. <%@ taglib ... %>
+		- To use third party/custom tags in JSP page.
+		- prefix="like namespace in xml"
+		- uri="identification of tag library."
+
+* To reduce embedded java code in JSP pages, it is recommended to use corresponding tags in JSP.
+	a. Standard actions -- 8 tags -- part of jsp specifications.
+	b. Custom tags -- user defined tags
+	c. Third party tag libraries -- free/commericial.
+
++ JSP standard actions:
+	1. <jsp:forward page="urlofwebcomponent"/>
+	2. <jsp:include page="urlofwebcomponent"/>
+		- This is dynamic inclusion -- handled in "Request Handling" stage.
+	3. <jsp:param ... />
+		- Used to send value to the next page.
+		- As a child tag of <jsp:forward> or <jsp:include>.
+	4. <jsp:plugin type="applet" ... />
+		- To embedded third party UI plugins like flash, applet, ..
+	5. <jsp:fallback>...
+		- Child tag of <jsp:plugin>.
+		- If plugin not loaded, show alt text/image.
+	6. <jsp:useBean id="objName" class="pkg.BeanClassName" scope="..."/>
+		- Internally creates object of given bean class using reflection (if not already created)
+		- scope= "page|request|session|application"
+			- "page" 	-- pageContext -- setAttribute() / getAttribute().
+			- "request" -- request -- setAttribute() / getAttribute().
+			- "session"	-- session -- setAttribute() / getAttribute().
+			- "application" -- ServletContext -- setAttribute() / getAttribute().
+		- <jsp:useBean .../> internals:
+			a. Check if object with given name is available in given scope -- using getAttribute("objName").
+			b. If not present, create new object using reflection. Then add into the given scope -- using setAttribute("objName", objRef);
+		- page : for current page current request only -- default scope.
+		- request : for current request only -- accessible on this page and all pages to which same request is forwarded/included.
+		- session : for current session only -- accessible on all pages requested by curret user.
+		- application : accessible on all pages for all users -- global.
+	7. <jsp:setProperty id="objName" property="propName" value="..." />
+		- Internally calls objName.setPropName() method using reflection (strict naming conv).
+		- value -- can be a hard-coded value or using EL syntax. 
+	   <jsp:setProperty id="objName" property="propName" param="reqParamName" />
+		- Internally calls objName.setPropName() method using reflection (strict naming conv).
+		- The value of req param is fetched, converted if necessary (like string to int) and then passed to setter method.
+	   <jsp:setProperty id="objName" property="*" />
+		- Internally calls objName.setPropName() methods using reflection (strict naming conv).
+		- All those props are initialized whose names are matching with req param names. Remaining are unset/ignored.
+	8. <jsp:getProperty>
+		- Internally calls objName.getPropName() methods using reflection (strict naming conv).
+		- The returned result will be embedded in generated response.
+	 * <jsp:setProperty ...> and <jsp:getProperty ...> can be used in JSP page, only if <jsp:useBean ...> for that bean is declared above on that page.
++ Java beans:
+	- Java bean is simple java class i.e. POJO + one/more business logic methods. It strictly follow naming conventions of java.
+
++ Custom tags:
+	- Contains: Business Logic + Presentation Logic.
+	- Implementation Steps:
+		- step 0 : decide how to use the tag.
+			<bookshop:showbook id="<%= id %>"/>
+				tagname: showbook
+				attributes: one -- id : int : dynamic : compulsory
+				body: empty.
+		- step 1 : implement tag handler class (.java).
+			class ShowBookTag extends SimpleTagSupport
+				- fields: private int id;
+				- ctor, getter/setter.
+				- doTag() -- implement BL + PL.
+		- step 2 : tag library descriptor (.tld)
+			- taglib info.
+				- name, short-name, description, version, jsp-version
+				- uri -- identification of this tag lib.
+			- tag(s) info.
+				- tagname, attribs, body, tag-class.
+		- step 3 : use tag in a jsp page.
+			- <%@ taglib prefix="anything" uri="taglib uri" %>
+			- <anything:showbook id="<%= id %>"/>
+			
++ PageContext -- implicit object:
+	- Holds all resources/info required for current execution of current JSP page.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
