@@ -1,0 +1,93 @@
++ JSP Expression Language (EL):
+	${ expression }
+	- To perform/solve simple expressions, without scriptlets.
+		${4 + 5 * 8 % 3}
+		${23 mod 5}
+	- To access attributes from different scopes -- also invoke their methods.
+		${scopeName.attrName}
+			e.g. ${pageScope.varName}, ${requestScope.varName}, ${sessionScope.varName}, ${applicationScope.varName}
+		${varName} -- It search in all scopes from lowest to highest until var is found.
+		${varName.fieldName} -- internally calls getter of given field.
+		${varName.method()} -- invokes method of given object.
+	- To access req params, req headers, cookies, ...
+		- EL implicit objects:
+			A. ${param._____} -- get single value from req param.
+				- request.getParameter("_____");
+			B. ${paramValues._____} -- get multiple values from req param.
+				- request.getParameterValues("_____");
+			C. ${header.______}
+				- request.getHeader("_____");
+			D. ${headerValues.______}
+				- request.getHeaderValues("_____");
+			E. ${cookie.______}
+				- 	Cookie[] arr = req.getCookies();
+					for(Cookie c: arr) {
+						if(c.getName().equals("_____"))
+							value = c.getValue();
+					}
+			F. ${initParam.______}
+				- 	ctx = this.getServletContext();
+					ctx.getInitParam("_____");
+	
++ JSTL : JSP Standard Tag Library:
+	+ JSTL components:
+		A. core :
+			- programming constructs: if-else, loops, switch-case, ...
+			- http redirection, url rewriting, 
+			- declare/access varibles in scopes.
+		B. xml
+		C. sql
+		D. fmt
+		E. fn
+
++ Model-View Architecture : (Model I)
+	- JSP (View) + Java Beans (Model)
+	- Good for small applications.
+
++ Model-View-Controller : (Model II)
+	- JSP (View) + Java Beans (Model) + Controller Servlet.
+	- Good for big applications -- maintainable.
+
+=========================================================================
++ Books:
+	- Faulkner -- Java Servlets & JSP.
+	- Hibernate -- Documentation: hibernate-reference.pdf
+	- Spring -- Documentation: spring-framework-reference.pdf
+=========================================================================
++ Hibernate:
+	- Hibernate is an ORM tool.
+	- ORM: Object Relational Mapping.
+	- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
