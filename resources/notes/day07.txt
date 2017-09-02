@@ -1,0 +1,69 @@
++ Hibernate is ORM.
+	+ class ---> table
+		properties	--> columns
+	+ ORM using annotation:
+		@Table, @Entity, @Id, @Column, ...
+		hibernate.cfg.xml -- mapping class="pkg.ClassName"
+	+ ORM using XML:
+		.hbm.xml file -- 
+			<class ...	
+				<id ...
+				<column ...
+		hibernate.cfg.xml -- mapping resource="path/to/hbm.xml"
+	
++ Hibernate Entity Life cycle:
+	+ Transient -- The entity object is created in java code and hibernate is not aware of it. If no reference in application point to the object, object is eligible for garbage collection.
+		Book b = new Book();
+	+ Persistent -- The	 entity object is added into the session cache.
+		- If object is part of session cache, it will not be fetched again from database.			
+		- If object from session cache is modified, it will be automatically updated into the database when transaction is commited. Internally hibernate track the changes made into any persistent object. Each persistent object is associated with a dirty bit. When persistent object is modified, its dirty bit is set. At the end of transaction, all objects whose dirty bit is set, update query is fired for them.
+		- If no reference in application point to the object, still session cache has a reference to the object and hence such object will never be garbage collected.
+		session.save(obj);
+		session.saveOrUpdate(obj);
+		session.persist(obj);
+		session.load(..);
+		session.get(..);
+	+ Removed -- When row corresponding to entity object has been deleted from db.  Changes to such object are not tracked by the hibernate. Eligible of garbage collection.
+		session.delete(obj); -- db row deleted
+	+ Detached -- The persistent object is now removed from session cache. It is no more tracked. Eligible of garbage collection.
+		session.close(); -- session cache is destroyed.
+		session.clear(); -- remove all objects from session cache.
+		session.evict(obj); -- remove given object from session cache.
+
++ Hibernate
+
++ Criteria:
+	
++ HQL:
+	SQL: SELECT * FROM BOOKS
+	HQL: "from Book b"
+
+	1. from Book b
+	2. from Book b where b.author=?
+	3. from Book b where b.author=? or b.subject=?
+	4. select distinct subject from Book b
+	5. select b.id, b.name, b.price from Book b order by b.price desc
+	6. delete from Book b
+	7. delete from Book b where b.subject=?
+	8. update Book b set b.price=? where b.author=?
+	9. insert -- from select
+
++ Relationships -- OneToOne OneToMany ManyToOne ManyToMany
+	DEPT -- EMP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
