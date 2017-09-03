@@ -2,6 +2,10 @@ package com.sunbeam.sh4.hib3;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -58,12 +62,22 @@ public class BookDao implements AutoCloseable {
 		}
 	}
 
+//	public List<Book> getBooksOfSubject(String subject) {
+//		//Criteria cr = session.createCriteria(Book.class);
+//		DetachedCriteria dcr = DetachedCriteria.forClass(Book.class);
+//		dcr.add(Restrictions.eq("subject", subject));
+//		Criteria cr = dcr.getExecutableCriteria(session);
+//		return cr.list();
+//	}
+	
 	public List<Book> getBooksOfSubject(String subject) {
-		//Criteria cr = session.createCriteria(Book.class);
-		DetachedCriteria dcr = DetachedCriteria.forClass(Book.class);
-		dcr.add(Restrictions.eq("subject", subject));
-		Criteria cr = dcr.getExecutableCriteria(session);
-		return cr.list();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Book> query = builder.createQuery(Book.class);
+		Root<Book> root = query.from(Book.class);
+		query.select(root);
+		query.where(builder.equal(root.get("subject"), subject));
+		Query<Book> q = session.createQuery(query);
+		return q.getResultList();
 	}
 	
 	public List<Book> getAllBooks() {
@@ -108,13 +122,15 @@ public class BookDao implements AutoCloseable {
 	public List<Book> hqlGetBooksOfSubject(String subject) {
 		String hql = "from Book b where b.subject=:p_subject";
 		Query<Book> q = session.createQuery(hql);
-		q.setString("p_subject", subject);
+		//q.setString("p_subject", subject);
+		q.setParameter("p_subject", subject);
 		return q.getResultList();
 	}
 	
 	public List<Book> hqlGetBooksOfAuthor(String author) {
 		Query<Book> q = session.getNamedQuery("hqlGetBooksOfAuthor");
-		q.setString("p_au", author);
+		//q.setString("p_au", author);
+		q.setParameter("p_au", author);
 		return q.getResultList();
 	}
 	
@@ -122,6 +138,39 @@ public class BookDao implements AutoCloseable {
 		String hql = "select b.id, b.name, b.price from Book b order by b.price desc";
 		Query<Object[]> q = session.createQuery(hql);
 		return q.getResultList();
+	}
+	
+	public List<Book> hqlSelectColumnsTransformResult() {
+		String hql = "select b.id, b.name, b.price from Book b order by b.price desc";
+		Query<Book> q = session.createQuery(hql);
+		q.setResultTransformer(new ResultTransformer() {
+			@Override
+			public Object transformTuple(Object[] result, String[] aliases) {
+				Book b = new Book();
+				b.setId((Integer)result[0]);
+				b.setName((String)result[1]);
+				b.setPrice((Double)result[2]);
+				return b;
+			}
+			@Override
+			public List transformList(List list) {
+				return list;
+			}
+		});
+		return q.getResultList();
+	}
+	
+	public List<Book> hqlSelectColumnsInObject() {
+		String hql = "select new Book(b.id, b.name, b.price) from Book b order by b.price desc";
+		Query<Book> q = session.createQuery(hql);
+		return q.getResultList();
+	}	
+	
+	public void hqlDeleteBooksOfSubject(String subject) {
+		String hql = "delete b from Book b where b.subject=:p_subject";
+		Query<Book> q = session.createQuery(hql);
+		q.setParameter("p_subject", subject);
+		q.executeUpdate();
 	}
 }
 

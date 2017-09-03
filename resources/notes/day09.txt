@@ -1,0 +1,5 @@
++ Stored Procedure
++ Caching
++ Generated Id
++ Inheritance
+

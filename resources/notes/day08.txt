@@ -1,0 +1,7 @@
++ fetch -- EAGER, LAZY
+	- Only for SELECT operation.
+
++ cascade -- PERSIST, DETACHED, MERGE, REFRESH, REMOVE -- ALL
+	- for insert, delete, merge, detach and refresh operation.
+
+

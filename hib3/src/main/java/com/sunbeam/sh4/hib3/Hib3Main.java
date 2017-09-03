@@ -43,25 +43,44 @@ public class Hib3Main {
 		//			e.printStackTrace();
 		//		}
 
+		try (BookDao dao = new BookDao()) {
+			dao.open();
+			List<Book> list = dao.hqlGetBooksOfSubject("C");
+			for (Book b : list) {
+				System.out.println(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 //		try (BookDao dao = new BookDao()) {
 //			dao.open();
-//			List<Book> list = dao.hqlGetBooksOfAuthor("SCHILDT");
+//			List<Object[]> list = dao.hqlSelectColumns();
+//			for (Object[]arr : list) {
+//				System.out.println(arr[0] + ", " + arr[1] + ", " + arr[2]);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	
+//		try (BookDao dao = new BookDao()) {
+//			dao.open();
+//			List<Book> list = dao.hqlSelectColumnsTransformResult();
 //			for (Book b : list) {
 //				System.out.println(b);
 //			}
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-
+		
 		try (BookDao dao = new BookDao()) {
 			dao.open();
-			List<Object[]> list = dao.hqlSelectColumns();
-			for (Object[]arr : list) {
-				System.out.println(arr[0] + ", " + arr[1] + ", " + arr[2]);
+			List<Book> list = dao.hqlSelectColumnsInObject();
+			for (Book b : list) {
+				System.out.println(b);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	
+		}		
 	}
 }
