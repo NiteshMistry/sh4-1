@@ -1,20 +1,27 @@
 package com.sunbeam.sh4.pizza.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name="PIZZA_ORDERS")
 public class Order implements Serializable {
+	@GenericGenerator(name="gen", strategy="native")
+	@GeneratedValue(generator="gen")
 	@Id
 	@Column
 	private int id;
@@ -25,7 +32,7 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="CUSTOMERID")
 	private Customer customer;
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", cascade={CascadeType.PERSIST})
 	private List<OrderDetail> detailsList;
 	public Order() {
 		this(0, new Date(), "Pending");
@@ -35,6 +42,7 @@ public class Order implements Serializable {
 		this.orderTime = orderTime;
 		this.status = status;
 		this.customer = new Customer();
+		this.detailsList = new ArrayList<>();
 	}
 	public List<OrderDetail> getDetailsList() {
 		return detailsList;

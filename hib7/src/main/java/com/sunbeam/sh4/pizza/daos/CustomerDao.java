@@ -15,7 +15,6 @@ import com.sunbeam.sh4.pizza.utils.HbUtil;
 public class CustomerDao {
 	public Customer getCustomer(String email) {
 		Session session = HbUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
 		Root<Customer> root = query.from(Customer.class);
@@ -23,7 +22,10 @@ public class CustomerDao {
 		query.select(root);
 		Query<Customer> q = session.createQuery(query);
 		Customer cust = q.getSingleResult();
-		session.getTransaction().commit();
 		return cust;
+	}
+	public void addCustomer(Customer customer) {
+		Session session = HbUtil.getSessionFactory().getCurrentSession();
+		session.persist(customer);
 	}
 }

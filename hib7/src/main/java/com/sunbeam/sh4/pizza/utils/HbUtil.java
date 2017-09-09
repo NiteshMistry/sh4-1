@@ -13,4 +13,13 @@ public class HbUtil {
 	public static SessionFactory getSessionFactory() {
 		return factory;
 	}
+	public static void newTransaction() {
+		factory.getCurrentSession().getTransaction().begin();
+	}
+	public static void commitTransaction() {
+		factory.getCurrentSession().getTransaction().commit();
+	}
+	public static void rollbackTransaction() {
+		factory.getCurrentSession().getTransaction().rollback();
+	}
 }

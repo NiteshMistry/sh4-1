@@ -1,5 +1,57 @@
-+ Stored Procedure
-+ Caching
-+ Generated Id
-+ Inheritance
++ Generated Id (hib9):
+	- Auto generation of primary keys:
+		@GenericGenerator(name="gen", strategy="???")
+		@GeneratedValue(generator="gen")
+		@Id
+		@Column
+		private int id;
+	- Strategies:
+		- assigned (default) -- values given in the program.
+		- increment -- select max(id) from table + 1
+		- sequence -- select nextval from sequence
+		- identity -- auto increment support from database
+		- native -- use sequence or identity depending on native support from db.
+		- hilo -- auto generated high & low values -- supported by db like pgsql.
+		- uuid -- id is universally unique id.
+	- for oracle/db sequence most commonly used:
+		@SequenceGenerator(name="gen", sequenceName="seqNameInDb", initialValue=0, allocationSize=1)
+
++ Stored Procedure (hib10):
+/* MYSQL PROCEDURE:
+DELIMITER //
+CREATE PROCEDURE SP_GETBOOKS(p_author TEXT)
+BEGIN
+	SELECT ID,NAME,AUTHOR,SUBJECT,PRICE FROM BOOKS WHERE AUTHOR=p_author;
+END;
+//
+DELIMITER ;
+*/
+
+/* MYSQL PROCEDURE:
+DELIMITER //
+CREATE PROCEDURE SP_BOOKPRICE(IN p_bookid int, xOUT p_price double)
+BEGIN
+	SELECT PRICE INTO p_price FROM BOOKS WHERE ID=p_bookid;
+END;
+//
+DELIMITER ;
+*/
+
++ Caching (hib11):
+	- Second level cache
+	- Query cache
+
++ Inheritance (hib12):
+	-
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,17 +1,23 @@
 package com.sunbeam.sh4.pizza.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name="PIZZA_CUSTOMERS")
 public class Customer implements Serializable {
+	@GenericGenerator(name="gen", strategy="native")
+	@GeneratedValue(generator="gen")
 	@Id
 	@Column
 	private int id;
@@ -37,6 +43,7 @@ public class Customer implements Serializable {
 		this.email = email;
 		this.mobile = mobile;
 		this.address = address;
+		this.orderList = new ArrayList<>();
 	}
 	public List<Order> getOrderList() {
 		return orderList;
