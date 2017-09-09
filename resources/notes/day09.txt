@@ -42,7 +42,7 @@ DELIMITER ;
 	- Query cache
 
 + Inheritance (hib12):
-	-
+	- 
 
 
 
