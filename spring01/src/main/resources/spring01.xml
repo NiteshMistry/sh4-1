@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="b3" class="com.sunbeam.sh4.spring.BoxImpl" init-method="init" destroy-method="destroy">
+		<property name="length" value="10"/>
+		<property name="breadth" value="8"/>
+		<property name="height" value="6"/>
+	</bean>
+	
+	<bean id="b4" class="com.sunbeam.sh4.spring.BoxImpl"  init-method="init" destroy-method="destroy">
+		<constructor-arg index="0" value="5"/>
+		<constructor-arg index="1" value="4"/>
+		<constructor-arg index="2" value="3"/>
+	</bean>
+	
+	<bean id="b5" class="com.sunbeam.sh4.spring.BoxImpl" p:length="20" p:breadth="15" p:height="10"  init-method="init" destroy-method="destroy"/>
+</beans>

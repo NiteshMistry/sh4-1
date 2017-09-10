@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- dependency beans -->
+	<bean id="p1" class="com.sunbeam.sh4.spring.PersonImpl">
+		<property name="name" value="Nilesh"/>
+		<property name="address" value="Mumbai"/>
+		<property name="mobile" value="9527331338"/>
+	</bean>
+	
+	<!-- dependent beans -->
+	<!-- manual : setter based dependecy injection -->
+	<bean id="a1" class="com.sunbeam.sh4.spring.AccountImpl">
+		<property name="accno" value="101"/>
+		<property name="type" value="Savings"/>
+		<property name="balance" value="1000"/>
+		<property name="accHolder" ref="p1"/>
+	</bean>
+	<!-- manual : constructor based dependecy injection -->
+	<bean id="a2" class="com.sunbeam.sh4.spring.AccountImpl">
+		<constructor-arg index="0" value="102"/>
+		<constructor-arg index="1" value="Savings"/>
+		<constructor-arg index="2" value="2000"/>
+		<constructor-arg index="3" ref="p1"/>
+	</bean>
+	
+	<bean id="sonsoleLogger" class="com.sunbeam.sh4.spring.ConsoleLoggerImpl" autowire-candidate="false"/>
+	<bean id="fileLogger" class="com.sunbeam.sh4.spring.FileLoggerImpl">
+		<property name="logFilePath" value="test.log"/>
+	</bean>
+	<bean id="a3" class="com.sunbeam.sh4.spring.AccountImpl" autowire="byType">
+		<property name="accno" value="103"/>
+		<property name="type" value="Savings"/>
+		<property name="balance" value="3000"/>
+	</bean>	
+	
+</beans>
+
+
+
+
+

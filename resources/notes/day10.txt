@@ -1,0 +1,16 @@
++ Spring Framework: Simplify Java Developement -- SE/EE applications.
+	- 2003 -- Rod Johnson -- Spring 1.0
+	- Spring framework -- Open source project -- sourceforge.net/github
+	- 2012 -- Spring 3.0 -- Java 1.5 & above -- annotations
+	- Spring Framework 4.3.10
+
++ Features:
+	- Test driven
+	- Maintainable -- Unchecked exception -- Readable
+	- Flexible
+	- Modular
+	- Design with interfaces
+	- Extensible
+	- Aspect Oriented Programming
+	- Dependency Injection
+		
